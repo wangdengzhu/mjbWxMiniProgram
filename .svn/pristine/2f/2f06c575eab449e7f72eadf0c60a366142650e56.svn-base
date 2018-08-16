@@ -1,0 +1,30 @@
+<!--pages/evaluate/evalSuccess.wxml-->
+<view class='top'>
+  <view class='round1'></view>
+  <view class='round2'></view>
+  <view class='round3'></view>
+  <view class='round4'></view>
+  <view class='round5'></view>
+  <text>感谢您的评价</text>
+  <button bindtap='lookEval'>查看评价</button>
+</view>
+<view>
+  <view class='con-eval'>
+    <view class='con-eval-text'>继续评价</view>
+  </view>
+  <view wx:if="{{evaluateGoodsList.length>0}}">
+    <eval-list evaluate-goods="{{evaluateGoodsList}}" is-show="{{isShowNowEval}}"></eval-list>
+     <view class="loading-container" wx:if="loading>0">
+      <view class="is-loading" wx:if="{{loading==1}}">
+        <view class="loading-icon"></view>
+        正在加载中
+      </view>
+      <view class="no-more" wx:if="{{loading==2}}">没有更多了</view>
+    </view> 
+  </view>
+  <view wx:else>
+    <empty-eval empty-image="https://devskin.manjd.net/miniprogram/images/logistics-empty.png" text="您暂时没有可评价的商品">
+      <button class='look-around' bindtap='toIndex'>随便逛逛</button>
+    </empty-eval>
+  </view>
+</view>

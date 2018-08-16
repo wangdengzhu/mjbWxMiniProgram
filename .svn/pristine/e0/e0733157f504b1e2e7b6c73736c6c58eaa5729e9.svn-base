@@ -1,0 +1,25 @@
+.empty-data{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  flex-wrap:wrap;
+  background-color: #fff;
+}
+.empty-data>view{
+  text-align:center;
+  margin-top: 217rpx;
+}
+.empty-data image{
+  width: 280rpx;
+  height: 240rpx;
+}
+.empty-data .empty-text{
+  color: #E2A481;
+  font-size: 28rpx;
+  margin-top: -10rpx;
+}
+.empty-data .empty-buttons{
+   margin-top: 53rpx;
+   font-size: 30rpx;
+}

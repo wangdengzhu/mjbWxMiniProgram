@@ -1,0 +1,39 @@
+<!-- pages/evaluate/nowEvaluate.wxml -->
+<view class="now-eval-container">
+  <eval-list evaluate-goods="{{goodsInfo}}" is-show="{{isShowNowEval}}"></eval-list>
+  <view style="height:20rpx;background-color:#f5f5f5;"></view>
+  <view class="eval-info">
+    <view class="star-info">
+      <text>评价</text>
+      <view class='start-item' bindtouchstart="onTouchstart" bindtouchmove="onTouchmove">
+        <block wx:for="{{5}}" wx:for-item="startItem" wx:key="index">
+          <view class="start {{ index < starsNum ? 'active' : ''}}" data-index="{{index}}">
+            ★
+          </view>
+        </block>
+      </view>
+      <text class="start-grade" wx:for="{{gradeList}}" wx:key="index" wx:if="{{index+1==starsNum}}">{{item}}</text>
+    </view>
+    <view class="eval-text">
+      <view class='text'>
+        <textarea placeholder-style="color: #ccc;" placeholder="您的评价是对我们最大的肯定～" maxlength="500" bindinput="onInput" value="{{text}}"></textarea>
+      </view>
+      <view class="textLen {{textLen==500?'color-red':''}}">（{{textLen}}/500）</view>
+      <view class="camera-box">
+        <upload-image name="upload" id="upload" limit="9" remote-name="USER_UPLOADVOUCHER"></upload-image>
+      </view>
+    </view>
+    <view class="eval-btn">
+      <view>
+        <view class="checkbox" bindtap="checkClick">
+          <view class="{{is_checked?'checked':'check'}}"></view>
+        </view>
+        <text>匿名评价</text>
+      <text style="font-size:22rpx;color:#999;margin-left:20rpx;">勾选后评价将以匿名方式展现</text>
+      </view>
+      <view>
+        <button class='btn-submit-eval' bindtap='onSubmit'>提交</button>
+      </view>
+    </view>
+  </view>
+</view>

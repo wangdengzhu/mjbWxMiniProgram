@@ -1,0 +1,27 @@
+<!--pages/logistics/logistics.wxml-->
+<view class='logistics-top'>
+  <movable-area>
+    <movable-view direction="horizontal">
+      <block wx:for="{{expressList}}" wx:key="index">
+        <view class="{{activeIndex==index?'active':''}}" data-index="{{index}}" data-item="{{item}}" bindtap='onChange'>快递{{index+1}}</view>
+      </block>
+    </movable-view>
+  </movable-area>
+</view>
+<view class='logistics-box' wx:if="{{logisticsList!=''}}">
+  <view class='logistics-info'>
+    <image src='https://devskin.manjd.net/miniprogram/images/transportation.png' mode='aspectFill'></image>
+    <view>
+      <view class='status'>{{logisticsList.expressstatus==1?"运输中":logisticsList.expressstatus==2?"已揽件":"已签收"}}</view>
+      <view class='info'>快递公司：{{logisticsList.expressname}}</view>
+      <view class='info'>快递单号：{{logisticsList.expressno}}</view>
+      <view class='info'>联系电话：{{logisticsList.servicetel}}</view>
+    </view>
+  </view>
+  <view class='logistics-detail'>
+    <view class='detail-item {{logisticsList.expressstatus==1&&index==0?" active":logisticsList.expressstatus==3&&index==0?" finish":""}}' wx:for="{{logisticsList.steps}}" wx:for-item="steps_item" wx:key="index">
+      <view>{{steps_item.Context}}</view>
+      <view>{{steps_item.Time}}</view>
+    </view>
+  </view>
+</view>

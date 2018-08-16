@@ -1,0 +1,8 @@
+<view class="search-input" >
+  <view class='search-icon'>
+  </view>
+  <view class="input-wrapper" >
+    <input class="input" disabled value="{{inputValue}}" placeholder-class="place-text" capture-catch:tap="onFocus" type="text"  placeholder="搜索喜欢的商品吧" />
+  </view>
+
+</view>

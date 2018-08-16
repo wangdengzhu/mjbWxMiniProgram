@@ -1,0 +1,93 @@
+<!--pages/aftersale/list/list.wxml-->
+<wxs src="../../../utils/tools.wxs" module="tools" />
+<view class="nav">
+  <view wx:for="{{menuList}}" wx:key="{{item.status}}" class="{{activeIndex == item.status ? 'on': ''}}" bindtap="changeActive" data-status="{{item.status}}">{{item.text}}</view>
+</view>
+<view class="list-wrap" data-current="{{activeIndex}}">
+  <emtpy wx:if="{{noOrder}}" empty-image="{{emptyIcon}}" text="没有售后的订单哦~"></emtpy>
+  <view class="list can-aftersale-list" wx:else>
+    <view wx:if="{{curStatus == 0}}">
+      <view class="order-item" wx:for="{{canAftersaleList}}" wx:key="{{item.id}}">
+        <view class="order-hd">
+          <text>订单编号：{{item.orderno}}</text>
+          <text>下单时间：{{item.ordertime}}</text>
+        </view>
+        <view class="goods-item-wrap" wx:for="{{item.lines}}" wx:for-item="line" wx:key="{{line.id}}">
+          <view class="goods-item">
+            <view class="goods-info" data-spuid="{{line.spuid}}" data-asorderno="{{line.asorderno}}" bindtap="goPage" data-skustatus="{{line.skustatus}}">
+              <view class="goods-pic">
+                <image lazy-load="true" src="{{line.skuimage}}"></image>
+              </view>
+              <view class="goods-desc">
+                <view class="goods-top">
+                  <view class="goods-title">{{line.spuname}}</view>
+                </view>
+                <view class="goods-sub-title">
+                  <view class="spec">{{line.spec}}</view>
+                  <view class="num">x{{line.qty}}</view>
+                </view>
+              </view>
+            </view>
+            <view class="btn-wrap">
+              <view class="apply-aftersale-btn btn" wx:if="{{line.canapplyorderservice && line.skustatus == 1}}" bindtap="applyAftersale" data-skuid="{{line.skuid}}" data-orderno="{{item.orderno}}">申请售后</view>
+              <navigator wx:elif="{{line.skustatus == 10}}" hover-class="none" url="/pages/aftersale/detail/detail?asOrderNo={{line.asorderno}}">
+                <view class="btn">售后中</view>
+              </navigator>
+              <view class="btn" wx:elif="{{line.canapplyorderservice && (line.skustatus == 30 || line.skustatus == 40 || line.skustatus == 50)}}" bindtap="applyAftersale" data-skuid="{{line.skuid}}" data-orderno="{{item.orderno}}">再次售后</view>
+              <view class="goods-tips" wx:else>该商品无法售后，有问题请联系客服</view>
+            </view>
+          </view>
+        </view>
+      </view>
+      <view class="loading-container">
+        <view class="is-loading" wx:if="{{isLoading1}}"><view class="loading-icon"></view>正在加载中</view>
+        <view class="no-more" wx:if="{{loaded1}}">没有更多了~</view>
+      </view>
+    </view>
+    <view class="aftersale-list" wx:else>
+      <view class="order-item" wx:for="{{aftersaleList}}" wx:key="{{item.id}}">
+        <view class="order-hd">
+          <text>售后编号：{{item.asorderno}}</text>
+          <text class="order-status" wx:if="{{item.astype == 2 && item.asstatus == 505}}">已退款</text>
+          <text class="order-status" wx:elif="{{item.astype == 1 && !item.fullname}}">退款 {{stateText[item.asstatus]}}</text>
+          <text class="order-status" wx:else>{{typeText[item.astype]}} {{stateText[item.asstatus]}}</text>          
+        </view>
+        <view class="goods-item-wrap">
+          <view class="goods-item">
+            <navigator hover-class="none" url="/pages/aftersale/detail/detail?asOrderNo={{item.asorderno}}">
+              <view class="goods-info">
+                <view class="goods-pic">
+                  <image lazy-load="true" src="{{item.skuimage}}"></image>
+                </view>
+                <view class="goods-desc">
+                  <view class="goods-top">
+                    <view class="goods-title">{{item.spuname}}</view>
+                    <view class="goods-price">￥{{tools.toFix(item.salesprice)}}</view>
+                  </view>
+                  <view class="goods-sub-title">
+                    <view class="spec">{{item.spec}}</view>
+                    <view class="num">x{{item.qty}}</view>
+                  </view>
+                </view>
+              </view>
+            </navigator>
+            <view class="btn-wrap" wx:if="{{item.asstatus == 501 || item.asstatus == 502 || item.asstatus == 504 || item.asstatus == 507}}">
+              <view class="apply-aftersale-btn btn" data-asorderno="{{item.asorderno}}" bindtap="cancelAftersaleFn">撤销申请</view>
+              <navigator wx:if="{{item.permission && item.asstatus == 502}}" hover-class="none" url="/pages/aftersale/detail/detail?asOrderNo={{item.asorderno}}">
+                <view class="apply-aftersale-btn btn">录入快递单</view>
+              </navigator>
+            </view>
+            <!-- <view class="btn-wrap" wx:if="{{item.permission && item.asstatus == 507}}">
+              <view class="apply-aftersale-btn btn">申请平台介入</view>
+              <view class="apply-aftersale-btn btn">关闭此售后申请</view>
+            </view> -->
+          </view>
+        </view>
+      </view>
+      <view class="loading-container">
+        <view class="is-loading" wx:if="{{isLoading2}}"><view class="loading-icon"></view>正在加载中</view>
+        <view class="no-more" wx:if="{{loaded2}}">没有更多了~</view>
+      </view>
+    </view>
+  </view>
+</view>

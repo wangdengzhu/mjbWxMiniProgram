@@ -1,0 +1,73 @@
+page{
+  padding-bottom: 235rpx;
+}
+.feedback-form{
+    font-size: 30rpx;
+  color: #333333;
+}
+.feedback-form .form-item{
+    padding: 21rpx 32rpx; 
+}
+.opinion{
+  width: 100%;
+  height: 237rpx;
+  color: #333333;
+  font-size: 28rpx;
+}
+.placeholder-textarea{
+    width: 100%;
+  height: 237rpx;
+  display: none;
+}
+.form-opinion{
+    height: 268rpx;
+}
+.hiddenLayout .opinion{
+  display: none;
+}
+.hiddenLayout .placeholder-textarea{
+  display:block;
+}
+
+.placeholder-text{
+  color: #CCCCCC;
+  z-index: 1;
+}
+.input-number{
+  display: flex;
+  justify-content: flex-end;
+  color: #CCCCCC;
+  font-size: 26rpx;
+}
+
+
+.input-number{
+  display: flex;
+  justify-content: flex-end;
+  color: #CCCCCC;
+  font-size: 26rpx;
+}
+.input-number.input-number-red{
+  color: #FF0000;
+}
+
+.btn-submut{
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: 0;
+  padding: 0;
+  width: 750rpx;
+  font-size: 34rpx;
+  height: 98rpx;
+  text-align: center;
+  line-height: 98rpx;
+  border-radius:0;
+  border:0;
+  background-color: #FF681D;
+  color: #ffffff;
+}
+.btn-submut::after{
+  border: 0;
+}

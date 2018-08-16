@@ -1,0 +1,33 @@
+<wxs module="m1">
+ function fileLen(list) {
+    return list.filter(function(d){return d.status!=3}).length;
+  }
+  module.exports.fileLen=fileLen;
+</wxs>
+<view class="upload-wrap">
+<view class="picture-item picture-wrap"  wx:for="{{uploadFiles}}" wx:if="{{item.status!=3}}" wx:for-item="item" wx:key="{{index}}">
+
+      <view class="picture-img" data-url="{{item.url}}" bindtap="onPreviewImage">
+        <image src="{{item.url}}" mode="aspectFill" lazy-load=''></image>
+      </view>
+      <view class="picture-fail" wx:if="{{item.status==2}}" data-index="{{index}}" catchtap="onReupload">
+          <view class="upload-fail-icon"></view>
+          <view class="reupload">重新上传</view>
+      </view>
+      <view class="picture-fail" wx:if="{{item.status==4}}" data-index="{{index}}">
+          <view class="upload-fail-icon"></view>
+          <view class="reupload">图片过大</view>
+      </view>
+      <view class="picture-uploading" wx:if="{{item.status==0}}">
+        <circle-progress percent="{{item.progress}}"  radius="28" font-size="16" stroke-width="3"  active-color="#09BB07"  ></circle-progress>
+      </view>
+      <view class="picture-remove"  data-index="{{index}}" catchtap="onRemovePicture"></view>
+    </view>
+
+    <view class="picture-item upload-picture-wrap" wx:key="upload" wx:if="{{m1.fileLen(uploadFiles)<limit}}" bind:tap="onChooseImage">
+      <view>
+        <view class="upload-picture-img"></view>
+        <view class="upload-picture-text">{{uploadBtn}}</view>
+      </view>
+    </view>
+</view>

@@ -1,0 +1,85 @@
+<!--pages/aftersale/apply/apply.wxml-->
+<wxs src="../../../utils/tools.wxs" module="tools" />
+<view class="line"></view>
+<view class="wrap" wx:if="{{dataIsLoaded}}">
+  <view class="service-type block">
+    <view class="block-text">服务类型</view>
+    <view class="btn-wrap">
+      <view wx:for="{{aftersaleType}}" wx:key="{{index}}"
+        class="btn {{goodsDetail[item.tip] ? '' : 'btn-disabled'}} {{activeAstype == item.astype ? 'btn-active': ''}}" data-canselect="{{goodsDetail[item.tip]}}" data-astype="{{item.astype}}" bindtap="changeActive">
+        {{item.txt}}
+      </view>
+    </view>
+  </view>
+  <view class="block">
+    <view class="refund-goods">
+      <view class="goods-wrap">
+        <view class="goods-pic">
+          <image src="{{goodsDetail.skuimage}}"></image>
+        </view>
+        <view class="goods-desc">
+          <view class="goods-top">
+            <view class="goods-title">{{goodsDetail.spuname}}</view>
+            <view class="goods-price">￥{{tools.toFix(goodsDetail.salesprice)}}</view>
+          </view>
+          <view class="goods-sub-title">
+            <view class="spec">{{goodsDetail.spec}}</view>
+            <view class="num">x{{goodsDetail.qty}}</view>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="refund-total-wrap flex-between">
+      <view class="block-text">售后数量</view>
+      <view class="num-ctrl-wrap">
+        <view class="minus-icon {{isSmallest ? 'grey' : ''}}" bindtap="ctrlRefunNum" data-ctrl="-"></view>
+        <view class="refund-num">{{applyqty}}</view>
+        <view class="add-icon {{isBiggest ? 'grey' : ''}}" bindtap="ctrlRefunNum" data-ctrl="+"></view>
+      </view>
+    </view>
+    <view class="refund-price-wrap flex-between">
+      <view class="block-text">退款金额</view>
+      <view class="refund-price">￥{{tools.toFix(refundamount)}}</view>
+    </view>
+  </view>
+  <view class="block feedback-wrap">
+    <view class="descript-wrap">
+      <view class="block-text">问题描述</view>
+      <textarea placeholder="请描述你的问题（10-500字）" placeholder-class="placeholder" maxlength="500" bindinput="bindDescTxt" class="{{isIos ? 'ios' : ''}}"></textarea>
+      <view class="text-tips {{descTxt.length == 500 ? 'redtxt' : ''}}">{{descTxt.length}}/500字</view>
+    </view>
+    <view class="upload-img-wrap">
+      <view class="block-text">上传凭证</view>
+      <view class="imgs-wrap">
+        <!-- <view class="upload-btn">
+          <view class="camera"></view>
+          <view>最多6张</view>
+        </view> -->
+        <upload-image name="upload" id="upload" limit="6" remote-name="AFTERSALE_UPLOADEVIDENCE"></upload-image>
+      </view> 
+    </view>
+  </view>
+  <block wx:if="{{activeAstype == 4 || activeAstype == 5}}"> 
+    <view class="block address">
+      <view class="address-hd flex-between" bindtap="goAddress">
+        <view class="block-text">商品收货地址</view>
+        <view class="right">
+          <text>修改</text>
+          <view></view>
+        </view>
+      </view>  
+      <view class="address-detail">
+        <view>
+          <text class="name">{{shippingaddress.fullname}}</text>
+          <text>{{shippingaddress.tel}}</text>
+        </view>
+        <view class="address">{{shippingaddress.province + shippingaddress.city + shippingaddress.county + shippingaddress.street1 + shippingaddress.street2}}</view>
+      </view>
+    </view>
+    <view class="contact-tips">售后专员可能联系您，请保持电话畅通。</view>
+  </block>  
+  <!-- <view class="submit-btn" bindtap="submit">提交</view> -->
+  <form bindsubmit="submit" report-submit="true" data-orderno="{{orderno}}">
+    <button formType="submit" class="submit-btn">提交</button>
+  </form>
+</view>

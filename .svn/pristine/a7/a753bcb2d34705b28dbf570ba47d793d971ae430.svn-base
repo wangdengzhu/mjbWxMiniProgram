@@ -1,0 +1,110 @@
+/* pages/aftersale/express/express.wxss */
+
+.wrap {
+  background-color: #f5f5f5;
+  position: absolute;
+  top: 0;
+  bottom: 0; 
+  left: 0;
+  right: 0;
+  box-sizing: border-box;
+}
+
+.express-state {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #fff;
+  padding: 47rpx 32rpx;
+  margin-bottom: 20rpx;
+}
+.express-state .icon {
+  width: 112rpx;
+  height: 112rpx;
+  background-image: url(https://devskin.manjd.net/miniprogram/images/transportation.png);
+  background-size: 100%;
+}
+.state-wrap {
+  flex: 1;
+  margin-left: 30rpx;
+}
+.state-wrap .state {
+  font-size: 34rpx;
+  color: #333;
+  margin-bottom: 22rpx;
+}
+.state-wrap .info {
+  color: #666;
+  font-size: 28rpx;
+  margin-bottom: 6rpx;
+}
+
+.express-detail {
+  background-color: #fff;
+}
+
+.no-express {
+  display: flex;
+  align-items: center;
+  padding: 39rpx;
+  font-size: 28rpx;
+  color: #FF681D;
+}
+.no-express .icon {
+  width: 42rpx;
+  height: 42rpx;
+  background-image: url(https://devskin.manjd.net/miniprogram/images/aftersale/no-express.png);
+  background-size: 100%;
+  margin-right: 20rpx;
+}
+
+.list {
+  padding: 50rpx 106rpx 50rpx 53rpx;
+}
+.item {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 50rpx;
+  padding-left: 58rpx;
+}
+.item .icon {
+  position: absolute;
+  top: 0;
+  left: -12rpx;
+  width: 24rpx;
+  height: 24rpx;
+  border-radius: 50%;
+  background-color: #ccc;
+}
+.item:first-child .icon {
+  background-color: #ff681d;
+}
+.item.finish .icon {
+  width: 44rpx;
+  height: 44rpx;
+  background-image: url(https://devskin.manjd.net/miniprogram/images/signed.png);
+  background-size: 100%;
+  background-repeat: no-repeat;
+  top: 0;
+  left: -22rpx;
+}
+.item:not(:last-child) {
+  border-left: 1rpx solid #ececec;
+}
+.item:last-child {
+  margin-top: -12rpx;
+}
+.txt-wrap {
+  flex: 1;
+}
+.item .txt {
+  margin-top: -6rpx;
+  font-size: 28rpx;
+  color: #333;
+  margin-bottom: 10rpx;
+}
+.item .time {
+  font-size: 24rpx;
+  color: #999;
+}

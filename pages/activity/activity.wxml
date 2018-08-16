@@ -1,0 +1,27 @@
+<!--pages/activity/activity.wxml-->
+
+<wxs src="../../utils/tools.wxs" module="tools" />
+<view>
+  <view class="banner-wrap">
+    <image lazy-load src="{{bg[0]}}"></image>
+  </view>
+  <view class="content-wrap" style="background-image: url({{bg[1]}})">
+    <view class="content">
+      <view class="item" wx:for="{{list}}" wx:key="{{item.spuid}}">
+        <navigator hover-class="none" url="/pages/goods/goodsDetail/goodsDetail?spuid={{item.spuid}}">
+          <image lazy-load class="good-pic" src="{{item.goodslistpicurl}}"></image>
+          <view class="good-info">
+            <view class="good-title">{{item.goodsname}}</view>
+            <view class="good-price">
+              <text class="sale-price">￥{{tools.toFix(item.goodsprice)}}</text>
+              <text class="origin-price" wx:if="{{item.marketprice > 0}}">￥{{tools.toFix(item.marketprice)}}</text>
+            </view>
+          </view>
+        </navigator>
+      </view>
+    </view>
+  </view>
+  <view class="footer-bg">
+    <image mode="aspectFill" src="{{bg[2]}}"></image>
+  </view>
+</view>

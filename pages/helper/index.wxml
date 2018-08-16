@@ -1,0 +1,11 @@
+<view scroll-y scroll-with-animation  class="helper-wrap">
+  <view class="group-list"  wx:if="{{isShow==1}}">
+   <view class="item" bind:tap="onNav" data-name="{{item.sort_name}}" wx:for="{{list}}" wx:key="{{item.qa_sort_id}}" data-id="{{item.qa_sort_id}}">
+   <view>{{item.sort_name}}</view>
+   <view class="arrow-r"></view>
+   </view>
+  </view>
+  <empty-goods wx:if="{{isShow==2}}" text="抱歉，暂无数据"></empty-goods>
+</view>
+
+

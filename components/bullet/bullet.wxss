@@ -1,0 +1,22 @@
+/* components/bullet/bullet.wxss */
+
+.bullet {
+  position: fixed;
+  left: 32rpx;
+  top: 260rpx;
+  height: 54rpx;
+  line-height: 54rpx;
+  max-width: 400rpx;
+  padding: 0 36rpx;
+  border-radius: 6rpx;
+  color: #fff;
+  font-size: 24rpx;
+  text-align: center;
+  background:linear-gradient(90deg,rgba(255,140,0,1),rgba(255,84,0,1));
+  z-index: 1004;
+  box-sizing: border-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  opacity: 0;
+}

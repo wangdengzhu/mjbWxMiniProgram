@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "选择收货地址",
+  "usingComponents": {
+    "empty-good": "/components/empty/emptyGood"
+  },
+  "backgroundTextStyle":"dark"
+}

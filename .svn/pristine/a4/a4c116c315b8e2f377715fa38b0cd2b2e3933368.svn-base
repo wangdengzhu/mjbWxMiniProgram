@@ -1,0 +1,24 @@
+
+<view class="upload-wrap">
+<view class="picture-item picture-wrap"  wx:for="{{pictures}}" wx:for-item="item" wx:key="{{index}}">
+
+      <view class="picture-img" data-url="{{item.url}}" bindtap="onPreviewImage">
+        <image src="{{item.url}}" mode="scaleToFill" lazy-load=''></image>
+      </view>
+      <view class="picture-fail" wx:if="{{item.status==2}}" data-index="{{index}}" catchtap="onReupload">
+          <view class="upload-fail-icon"></view>
+          <view class="reupload">重新上传</view>
+      </view>
+      <view class="picture-uploading" wx:if="{{item.status==0}}">
+        <circle-progress percent="{{item.progress}}" show-info radius="40" font-size="12" stroke-width="4"  active-color="#09BB07"  ></circle-progress>
+      </view>
+      <view class="picture-remove" wx:if="{{item.status!=0}}" data-index="{{index}}" catchtap="onRemovePicture"></view>
+    </view>
+
+    <view class="picture-item upload-picture-wrap" wx:key="upload" wx:if="{{pictures.length<limit}}" bind:tap="onChooseImage">
+      <view>
+        <view class="upload-picture-img"></view>
+        <view class="upload-picture-text">{{uploadBtn}}</view>
+      </view>
+    </view>
+</view>

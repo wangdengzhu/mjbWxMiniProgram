@@ -1,0 +1,2 @@
+<!--pages/chat/chat.wxml-->
+<web-view src="{{ webViewURL }}"></web-view> 

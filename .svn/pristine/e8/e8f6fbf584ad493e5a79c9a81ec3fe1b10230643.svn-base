@@ -1,0 +1,186 @@
+<!--pages/aftersale/detail/detail.wxml-->
+<wxs src="../../../utils/tools.wxs" module="tools" />
+<view class="wrap" wx:if="{{dataIsLoaded}}">
+  <!-- 如果下部有按钮需要加上page类名增加padding-bottom -->
+  <view class="{{(detail.asstatus == 501 || detail.asstatus == 502 || detail.asstatus == 504 || detail.asstatus == 507  || detail.asstatus == 510) ? 'page' : ''}}">
+    <view class="aftersale-state">
+      <view class="state-wrap">
+        <!-- 状态展示根据售后类型astype和售后状态asstatus组合展示 -->
+        <view class="state-text" wx:if="{{detail.asstatus == 501 || detail.asstatus == 502 || detail.asstatus == 503 || detail.asstatus == 509 || detail.asstatus == 510 || detail.asstatus == 511}}">{{asStatusType[detail.asstatus].txt[detail.astype]}}</view>
+        <view class="state-text" wx:else>{{asStatusType[detail.asstatus].txt}}</view>
+        <view class="state-sub" wx:if="{{detail.asstatus == 502 || detail.asstatus == 507}}">{{tools.secFormat(detail.returnsendtime)}}</view>
+         <view class="state-sub" wx:elif="{{detail.asstatus != 503}}">{{tools.clearTime(detail.asstatustime)}}</view> 
+      </view>
+      <view class="state-icon {{asStatusType[detail.asstatus].cls}}"></view>
+    </view>
+
+    <!-- 退货地址 -->
+    <view class="back-address" wx:if="{{detail.asstatus == 502 }}">
+      <view class="address-hd">
+        <view class="hd-icon position-icon"></view>
+        <view class="hd-text">退货地址</view>
+      </view>
+      <view class="contact-man">
+        <text>{{detail.shippmentname}}</text>
+        <text>{{detail.shippmenttel}}</text>
+      </view>
+      <view class="address-detail">
+        <text>{{detail.shippmentaddress}}</text>
+      </view>
+    </view>
+
+    <!-- 收货地址 -->
+    <view class="back-address" wx:if="{{detail.asstatus == 510 || detail.asstatus == 511}}">
+      <view class="address-hd">
+        <view class="hd-icon position-icon"></view>
+        <view class="hd-text">收货地址</view>
+      </view>
+      <view class="contact-man">
+        <text>{{detail.asaddressdto.districtname}}</text>
+        <text>{{detail.asaddressdto.tel}}</text>
+      </view>
+      <view class="address-detail">
+        <text>{{detail.asaddressdto.provincename + detail.asaddressdto.cityname + detail.asaddressdto.districtname + detail.asaddressdto.townname + detail.asaddressdto.fulladdress}}</text>
+      </view>
+    </view>
+
+    <!-- 收货物流信息 -->
+    <view class="back-address" wx:if="{{showAsExpress}}">
+      <view class="address-hd">
+        <view class="hd-icon car-icon"></view>
+        <view class="hd-text">收货物流信息</view>
+      </view>
+      <view class="contact-man">
+        <text>{{detail.asaddressdto.contacts}}</text>
+        <text>{{detail.asaddressdto.tel}}</text>
+      </view>
+      <view class="address-detail" bindtap="goExpressPage">
+        <text>{{asExpress.context || '暂无物流信息'}}</text>
+        <view class="icon"></view> 
+      </view> 
+    </view>
+
+    <!-- 退货物流信息 -->
+    <view class="back-address" wx:if="{{showExpress}}">
+      <view class="address-hd">
+        <view class="hd-icon car-icon"></view>
+        <view class="hd-text">退货物流信息</view>
+      </view>
+      <view class="contact-man" wx:if="{{detail.expressdata}}">
+        <!-- <text>{{expressState[expressDetail.state]}}</text> -->
+        <text>{{expressDetail.time}}</text>
+      </view>
+      <view class="address-detail" bindtap="goExpressPage">
+        <text>{{expressDetail.context || '暂无物流信息'}}</text>
+        <view class="icon"></view> 
+      </view>
+    </view>
+    <!-- 输入展示 -->
+    <view class="edit-block" wx:if="{{showExpress}}">
+      <view class="section">
+        <view class="section-title">快递公司</view>
+        <view class="section-val">{{detail.expressname}}</view>
+      </view>
+      <view class="section">
+        <view class="section-title">运单号码</view>
+        <view class="section-val">{{detail.expressno}}</view>
+      </view>
+      <view class="upload-img-wrap">
+        <view class="block-text">凭证图片</view>
+        <view class="upload-imgs-wrap">
+          <view class="img" wx:for="{{asReturnEvidenceImgsArr}}" wx:key="{{index}}">
+            <image src="{{item}}" lazy-load="true" mode="aspectFill" data-url="{{item}}" bindtap="showBigImg"></image>
+          </view>
+        </view>
+      </view>
+    </view>
+    <!-- 输入 -->
+    <view class="edit-block" wx:if="{{detail.asstatus == 502}}">
+      <view class="section">
+        <view class="section-title">快递公司</view>
+        <picker bindchange="bindPickerChange" value="{{index}}" range="{{expressList}}" range-key="{{'expressname'}}">
+          <view class="picker">
+            <view class="express-state" wx:if="{{hasSelectExpress}}">
+              <text>{{expressList[index].expressname}}</text>
+              <view></view>
+            </view>
+            <view class="init-state" wx:else>
+              <text>请选择</text>
+              <view></view>
+            </view>
+          </view>
+        </picker>
+      </view>
+      <view class="section" wx:if="{{showExpreessIpt}}">
+        <view class="section-title">快递公司名称</view>
+        <input bindinput="bindExpressName" type="number" placeholder="请填写物流公司名称" placeholder-style="color: #ccc"></input>
+      </view>
+      <view class="section">
+        <view class="section-title">运单号码</view>
+        <input bindinput="bindExpressNo" placeholder="请填写运单号" placeholder-style="color: #ccc"></input>
+      </view>
+      <view>
+        <view class="upload-img-wrap">
+          <view class="block-text">上传凭证</view>
+          <view class="imgs-wrap">
+            <upload-image name="upload" id="upload" limit="6" remote-name="AFTERSALE_UPLOADEVIDENCE"></upload-image>
+          </view>
+        </view>
+      </view>
+    </view> 
+
+    <view class="close-tips" wx:if="{{detail.asstatus == 504 || detail.asstatus == 507 || detail.asstatus == 508}}">
+      <text>{{closeType[detail.closetype] || '商家拒绝申请。'}}</text>
+      <text>{{detail.retractreason}}</text>
+    </view>
+
+    <block>
+      <view class="goods-wrap-hd">售后商品信息</view>
+      <navigator hover-class="none" url="/pages/goods/goodsDetail/goodsDetail?spuid={{detail.spuid}}">
+        <view class="goods-wrap">
+          <view class="goods-pic">
+            <image src="{{detail.skuimage}}"></image>
+          </view>
+          <view class="goods-info">
+            <view class="goods-title">{{detail.spuname}}</view>
+            <view class="goods-spec">{{detail.spec}}</view>
+            <view class="goods-price">￥{{tools.toFix(detail.refundamount)}}</view>
+          </view>
+        </view>
+      </navigator>
+      <view class="upload-img-wrap asEvidenceImgs" wx:if="{{(detail.asstatus == 501 || detail.asstatus == 504 || detail.asstatus == 505 || detail.asstatus == 507 || detail.asstatus == 508) && detail.asEvidenceImgsArr}}">
+        <view class="block-text">凭证图片</view>
+        <view class="upload-imgs-wrap">
+          <view class="img" wx:for="{{asEvidenceImgsArr}}" wx:key="{{index}}">
+            <image src="{{item}}" lazy-load="true" mode="aspectFill" data-url="{{item}}" bindtap="showBigImg"></image>
+          </view>
+        </view>
+      </view>
+      <view class="aftersale-info">
+        <view>
+          <text>售后数量</text>
+          <text>{{detail.qty}}</text>
+        </view>
+        <view>
+          <text>售后原因</text>
+          <text>{{detail.reason}}</text>
+        </view>
+        <view>
+          <text>售后编号</text>
+          <text>{{detail.asorderno}}</text>
+        </view>
+        <view>
+          <text>申请时间</text>
+          <text>{{detail.applytime}}</text>
+        </view>
+      </view>
+    </block>
+
+     <view class="fixed-wrap">
+      <view class="btn" wx:if="{{detail.asstatus == 501 || detail.asstatus == 504 || detail.asstatus == 507}}" bindtap="cancelAftersaleFn">撤销申请</view>
+      <view class="btn" wx:if="{{detail.asstatus == 507}}" bindtap="applyPlatformFn">平台介入</view> 
+      <view class="btn" wx:if="{{detail.asstatus == 502}}" bindtap="submitReturnFn">提交</view> 
+      <view class="btn" wx:if="{{detail.asstatus == 510}}" bindtap="confirmReceivingFn">确认收货</view>
+    </view> 
+  </view>
+</view>

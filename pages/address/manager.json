@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "收货地址管理",
+  "usingComponents": {
+    "empty-good": "/components/empty/emptyGood"
+  },
+  "backgroundTextStyle":"dark"
+}

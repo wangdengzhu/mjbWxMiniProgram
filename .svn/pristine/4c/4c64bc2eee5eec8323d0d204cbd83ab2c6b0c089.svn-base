@@ -1,0 +1,9 @@
+  <view class="dropdown {{visible?'dropdown-in':'dropdown-out'}}">
+    <view class="dropdown-current" catch:tap="onSelect">
+      <view class="text">{{currentLabel}}</view>
+      <view class="arrow-down"></view>
+    </view>
+    <view class="dropdown-menu{{menu}}" bind:transitionend="ontransitionend">
+      <view class="dropdown-item" data-value="{{item.value}}" catch:tap="onSelectItem" wx:for="{{data}}" wx:key="{{item.value}}">{{item.label}}</view>
+    </view>
+  </view>

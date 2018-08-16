@@ -1,0 +1,290 @@
+// pages/aftersale/apply/apply.js
+const app = getApp();
+const { getDetail } = require('../../../apis/order.js');
+const { createAftersale } = require('../../../apis/aftersale.js');
+const { pushMsgId } = require('../../../apis/pushMsg.js');
+app.Page({
+
+  /**
+   * 页面的初始数据
+   */
+  data: {
+    goodsDetail: null,
+    dataIsLoaded: false,
+    orderDetail: null,
+    shippingaddress: null,
+    activeAstype: 0,
+    pictures: [],
+
+    // 退款最大金额
+    canmaxrefundamount: 0,
+    refundamount: 0,
+    // 退款数量
+    canapplyasmaxqty: 1,
+    applyqty: 0,
+
+    OrderLineId: '',
+    OrderId: '',
+
+    descTxt: '',
+
+    aftersaleType: [
+      {
+        tip: 'canapplyasrefund',
+        txt: '退款',
+        astype: 2
+      },
+      {
+        tip: 'canapplyasrefundandreturns',
+        txt: '退货退款',
+        astype: 3
+      },
+      {
+        tip: 'canapplyasexchangegoods',
+        txt: '换货',
+        astype: 4
+      },
+      {
+        tip: 'canapplyasrepair',
+        txt: '维修',
+        astype: 5
+      }
+    ],
+
+    isIos: false,
+    isBiggest: true,
+    isSmallest: false
+  },
+
+  getDetailFn: function(orderNo) {
+    getDetail(orderNo).then(res => {
+      console.log(res);
+      for(let i=0; i<res.lines.length; i++) {
+        if(res.lines[i].skuid == this.data.skuid) {
+          this.setData({
+            goodsDetail: res.lines[i],
+            dataIsLoaded: true,
+            shippingaddress: res.shippingaddress,
+            orderDetail: res,
+            canmaxrefundamount: res.lines[i].canmaxrefundamount,
+            refundamount: res.lines[i].canmaxrefundamount,
+            canapplyasmaxqty: res.lines[i].canapplyasmaxqty,
+            applyqty: res.lines[i].canapplyasmaxqty,
+          });
+          if (res.lines[i].canapplyasmaxqty == 1) {
+            this.setData({
+              isSmallest: true
+            });
+          }
+        }
+      }
+    })
+  },
+
+  // 选择服务类型
+  changeActive: function(e) {
+    let canSelect = e.currentTarget.dataset.canselect;
+    let astype = e.currentTarget.dataset.astype;
+    if(canSelect) {
+      this.setData({
+        activeAstype: astype
+      });
+    }
+  },
+
+  // 操作售后数量
+  ctrlRefunNum: function(e) {
+    let ctrl = e.currentTarget.dataset.ctrl;
+    if(ctrl == '+'){
+      if (this.data.applyqty < this.data.canapplyasmaxqty) {
+        this.data.applyqty++;
+      }
+    }else {
+      if(this.data.applyqty > 1) {
+        this.data.applyqty--;
+      }
+    }
+
+    if (this.data.applyqty == 1) {
+      this.setData({
+        isSmallest: true
+      })
+    } else if (this.data.applyqty == this.data.canapplyasmaxqty) {
+      this.setData({
+        isBiggest: true
+      })
+    }else {
+      this.setData({
+        isBiggest: false,
+        isSmallest: false
+      })
+    }
+
+    this.setData({
+      applyqty: this.data.applyqty,
+      refundamount: (this.data.canmaxrefundamount / this.data.canapplyasmaxqty * this.data.applyqty)
+    })
+  },
+
+  bindDescTxt: function(e) {
+    this.setData({
+      descTxt: e.detail.value
+    });
+  },
+
+  goAddress: function() {
+    this.setPageStorageData({
+      addressDetail: this.data.shippingaddress
+    })
+    wx.navigateTo({
+      url: '/pages/address/newAddress?isAfatersaleAddress=true',
+    });
+  },
+
+  // 提交
+  submit: function(e) {
+    let msg = '';
+    let that = this;
+    let { uploading, pictures } = this.selectComponent('#upload').data;
+    if (this.data.activeAstype < 2) {
+      msg = '请选择服务类型';
+    } else if (!this.data.descTxt) {
+      msg = '请输入问题描述';
+    }else if(this.data.descTxt.length < 10) {
+      msg = '至少输入10个字符'
+    } else if (uploading) {
+      msg = '图片还在上传中，请耐心等待';
+    }
+    if (msg != '') {
+      this.mjd.showToast(msg);
+      return;
+    }
+    let AsEvidenceName;
+    if (pictures.length) {
+      AsEvidenceName = pictures.filter(r => r.status == 1).map(r => r.url).join(',');
+    }
+    // 如果不换货和维修相关参数直接传空
+    let shippingaddress = {};
+    if (this.data.activeAstype == 4 || this.data.activeAstype == 5) {
+      shippingaddress = this.data.shippingaddress;
+    }
+    let formId = e.detail.formId;
+    // 105.退款申请成功106.退货申请成功107.维修申请成功108.换货申请成功
+    let businessType = {
+      '2': 105,
+      '3': 106,
+      '4': 107,
+      '5': 108
+    };
+    createAftersale({
+      AsType: this.data.activeAstype,
+      OtherReason: this.data.descTxt,
+      OrderNo: this.data.orderNo,
+      OrderId: this.data.orderDetail.id,
+      OrderLineId: this.data.goodsDetail.id,
+      Qty: this.data.applyqty,
+      RequestRefundAmount: this.data.refundamount,
+      AsEvidenceName: AsEvidenceName,
+      ProvinceId: shippingaddress.provincecode,
+      ProvinceName: shippingaddress.province,
+      CityId: shippingaddress.citycode,
+      CityName: shippingaddress.city,
+      DistrictId: shippingaddress.countycode,
+      DistrictName: shippingaddress.county,
+      TownId: shippingaddress.street1code,
+      TownName: shippingaddress.street1,
+      Contacts: shippingaddress.fullname,
+      Tel: shippingaddress.tel,
+      FullAddress: shippingaddress.street2
+    }, true).then(res => {
+      wx.showToast({
+        title: '您的售后申请已提交',
+        icon: 'none'
+      });
+      pushMsgId({
+        bindId: formId,
+        referenceNo: that.data.orderNo,
+        businessType: businessType[that.data.activeAstype],
+      }).then(res => {
+        console.log(res)
+      });
+      setTimeout(() => {
+        wx.redirectTo({
+          url: `/pages/aftersale/detail/detail?asOrderNo=${res}`,
+        })
+      });
+    }).catch(e => {
+      console.log(e)
+    });
+  },
+
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  onLoad: function (options) {
+    try {
+      let res = wx.getSystemInfoSync();
+      console.log(res.system);
+      if(res.system.indexOf('iOS') != -1) {
+        this.setData({
+          isIos: true
+        })
+      }
+    } catch (e) {
+      // Do something when catch error
+    }
+    this.setData({
+      orderNo: options.orderNo,
+      skuid: options.skuid
+    });
+    this.getDetailFn(options.orderNo)
+  },
+
+  /**
+   * 生命周期函数--监听页面初次渲染完成
+   */
+  onReady: function () {
+  
+  },
+
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow: function (options) {
+    // 从修改地址过来
+    let key = Object.keys(options);
+    if(key.length != 0) {
+      this.setData({
+        shippingaddress: options.addressDetail
+      })
+    }
+  },
+
+  /**
+   * 生命周期函数--监听页面隐藏
+   */
+  onHide: function () {
+  
+  },
+
+  /**
+   * 生命周期函数--监听页面卸载
+   */
+  onUnload: function () {
+  
+  },
+
+  /**
+   * 页面相关事件处理函数--监听用户下拉动作
+   */
+  onPullDownRefresh: function () {
+  
+  },
+
+  /**
+   * 页面上拉触底事件的处理函数
+   */
+  onReachBottom: function () {
+  
+  }
+})

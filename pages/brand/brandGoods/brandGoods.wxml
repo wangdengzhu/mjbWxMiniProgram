@@ -1,0 +1,21 @@
+<!--pages/brand/brandGoods/brandGoods.wxml-->
+<view wx:if="{{dataIsLoaded}}">
+  <emtpy wx:if="{{noGoods}}" empty-image="{{emptyIcon}}" text="没有相关商品"></emtpy>
+  <view wx:else>
+    <view class="header">
+      <image class="banner" src="{{brandbackgrdpic}}" wx:if="{{brandbackgrdpic}}"></image>
+      <image class="logo" src="{{brandlogo}}" wx:if="{{brandlogo}}"></image>
+      <view class="description" wx:if="{{brandbriefintro}}">
+        <text class="{{textall ? 'more2' : ''}}">{{brandbriefintro}}</text>
+        <view class="icon-wrap" bindtap="showAllSwitch">
+          <view class="icon {{textall ? 'down' : 'up'}}" wx:if="{{moreTwoLines}}"></view>
+        </view>
+      </view>
+    </view>
+    <goodlist goodsArr="{{goodsList}}"></goodlist>
+    <view class="loading-container">
+      <view class="is-loading" wx:if="{{isLoading}}"><view class="loading-icon"></view>正在加载中</view>
+      <view class="no-more" wx:if="{{loaded}}">没有更多啦~</view>
+    </view>
+  </view>
+</view>

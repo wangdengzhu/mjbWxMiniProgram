@@ -1,0 +1,20 @@
+<form class="feedback-form{{visible?' hiddenLayout':''}}" bind:submit="onSubmit">
+  <downlist bindvisible="onVisible" id="feedType" default-label="反馈类型" default-value="-1" data="{{feedbackList}}"></downlist>
+  <view class="form-item form-opinion">
+      <textarea  class="opinion" maxlength="300"  name="opinion" placeholder-class="placeholder-text"  bindinput="onInput" placeholder="说出您的意见，小的一定接受（10-300字）" />
+    <view class="placeholder-textarea"></view>
+    <view class="input-number{{inputNumber>=300?' input-number-red':''}}">
+      <view>{{inputNumber}}/300字</view>
+    </view>
+  </view>
+  <view class="separate-line"></view>
+  <view class="form-item">
+    上传凭证
+  </view>
+  <view class="form-item clearfix">
+    <upload-image name="upload" id="upload" limit="6" remote-name="USER_UPLOADVOUCHER"></upload-image>
+  </view>
+  <button class="btn-submut" form-type="submit">
+  提交
+  </button>
+</form>

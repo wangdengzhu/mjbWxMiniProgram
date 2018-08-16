@@ -1,0 +1,147 @@
+/* pages/evaluate/nowEvaluate.wxss */
+
+.now-eval-container {
+  color: #333;
+  font-size: 26rpx;
+}
+
+.star-info {
+  padding: 24rpx 30rpx;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.star-info, .start-item {
+  display: flex;
+  align-items: center;
+  font-size: 28rpx;
+}
+
+.start {
+  color: #ccc;
+  font-size: 40rpx;
+  margin-left: 10rpx;
+}
+
+.start.active {
+  color: #ff681d;
+}
+
+.start-grade {
+  margin-left: 24rpx;
+}
+
+.eval-text {
+  padding: 24rpx 30rpx;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.text textarea {
+  width: 100%;
+  font-weight: normal;
+}
+
+.eval-text>.textLen {
+  text-align: right;
+  color: #999;
+  font-size: 24rpx;
+}
+
+.color-red {
+  color: red;
+}
+
+.eval-btn {
+  padding: 24rpx 30rpx;
+}
+
+.checkbox {
+  display: flex;
+  align-items: center;
+  float: left;
+  margin: -20rpx 0 -20rpx -30rpx;
+  padding: 20rpx;
+}
+
+.checkbox>view {
+  width: 32rpx;
+  height: 32rpx;
+  border-radius: 50%;
+}
+
+.check {
+  border: 1px solid #ccc;
+}
+
+.checked {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  border: 1px solid #ff681d;
+  background-color: #ff681d;
+}
+
+.checked::after {
+  content: "";
+  position: absolute;
+  top: 8rpx;
+  left: 7rpx;
+  width: 18rpx;
+  height: 9rpx;
+  border-left: 1px solid #fff;
+  border-bottom: 1px solid #fff;
+  transform: rotate(-45deg);
+}
+
+.camera-box {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  margin: 11rpx -30rpx 0;
+}
+
+.pic-item {
+  position: relative;
+  height: 138rpx;
+  width: 138rpx;
+  margin: 11rpx 25rpx;
+}
+
+.pic-item image {
+  width: 100%;
+  height: 100%;
+}
+
+.clear-icon {
+  position: absolute;
+  top: -15rpx;
+  right: -15rpx;
+  background-color: #fff;
+  border-radius: 50%;
+  z-index: 99;
+}
+
+.camera-info {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  border: 1px dotted #ccc;
+}
+
+.camera-info image {
+  width: 40rpx;
+  height: 40rpx;
+}
+
+.btn-submit-eval {
+  background-color: #fff;
+  color: #ff681d;
+  width: 100%;
+  margin-top: 86rpx;
+  font-size: 36rpx;
+}
+
+.btn-submit-eval::after {
+  border-color: #ff681d;
+}

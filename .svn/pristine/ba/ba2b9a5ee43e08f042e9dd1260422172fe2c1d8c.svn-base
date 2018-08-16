@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "goodlist": "/components/goodList/goodList",
+    "emtpy": "/components/empty/emptyGood"
+  },
+  "navigationBarTitleText": ""
+}

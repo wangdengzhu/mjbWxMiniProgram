@@ -1,0 +1,109 @@
+
+.upload{}
+
+.upload-picture-wrap{
+  border:2rpx solid rgba(204,204,204,1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.upload-picture-wrap>view{
+  text-align: center;
+}
+.upload-picture-wrap .upload-picture-img{
+    width:64rpx;
+   height:60rpx;
+  background-image: url(https://devskin.manjd.net/miniprogram/images/camera.png);
+   background-repeat: no-repeat;
+   background-size:contain; 
+    margin: 0 auto;
+}
+.upload-picture-wrap .upload-picture-text{
+  color: #999999;
+  font-size: 24rpx;
+  margin-top: 16rpx;
+}
+
+.picture-wrap{
+  border:2rpx solid rgba(204,204,204,1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.picture-wrap .picture-fail,.picture-wrap .picture-uploading{
+  display:flex;
+  width:208rpx;
+  height:208rpx;
+  align-items: center;
+  justify-content: center;
+  font-size: 26rpx;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 2;
+   background-color: rgba(0,0,0,0.5); 
+  flex-direction:row;
+  flex-wrap:wrap;
+}
+.upload-fail-icon{
+  background-image: url(https://devskin.manjd.net/miniprogram/images/upload-fail.png);
+  background-repeat: no-repeat;
+  background-size:cover;
+  width: 56rpx;
+  height: 56rpx;
+}
+.picture-fail .reupload{
+  color: #ffffff;
+  background-color: rgba(0,0,0,0.5);
+  height: 50rpx;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+   display: block;
+  text-align: center;
+  font-size: 24rpx;
+  line-height: 50rpx;
+}
+.picture-uploading>view{
+  width: 100%;
+  text-align: center;
+}
+.picture-uploading progress{
+  width: 100%;
+}
+.picture-wrap .picture-img{
+  border: 0;
+  height: 100%;
+  width: 100%;
+}
+.picture-wrap .picture-img image{
+  width:208rpx;
+  height:208rpx;
+  border: 0;
+}
+.picture-remove{
+     width:32rpx;
+   height:32rpx;
+  background-image: url(https://devskin.manjd.net/miniprogram/images/remove.png);
+   background-repeat: no-repeat;
+   background-size:contain; 
+   position: absolute;
+   right: -17rpx;
+   top:-17rpx;
+   z-index: 9;
+}
+
+ .picture-item{
+  float: left;
+  width:208rpx;
+  height:208rpx;
+  margin-right: 25rpx;
+  margin-bottom: 40rpx;
+   /* box-sizing: border-box;  */
+}
+.picture-item:nth-child(3n){
+    margin-right:0;
+} 

@@ -1,0 +1,28 @@
+<form class="feedback-form" bind:submit="onSubmit">
+  <downlist bindvisible="onVisible" default-label="反馈类型" default-value="-1" data="{{feedbackList}}"></downlist>
+  <view class="form-item">
+      <textarea  class="opinion{{visible?' visibleHidden':''}}" maxlength="300"  name="opinion" placeholder-class="placeholder-text" bindinput="onInput" placeholder="说出您的意见，小的一定接受（10-300字）" />
+    <view class="input-number">
+      <view>{{inputNumber}}/300</view>
+    </view>
+  </view>
+  <view class="separate-line"></view>
+  <view class="form-item">
+    上传凭证
+  </view>
+  <view class="form-item upload clearfix">
+    <view class="picture-item picture-wrap" wx:for="{{pictures}}" wx:key="{{index}}">
+      <view>
+        <image src="{{item.src}}" lazy-load=''></image>
+      </view>
+      <view class="picture-remove"></view>
+    </view>
+
+    <view class="picture-item upload-picture-wrap" wx:if="{{pictures.length<6}}">
+      <view>
+        <view class="upload-picture-img"></view>
+        <view class="upload-picture-text">最多6张</view>
+      </view>
+    </view>
+  </view>
+</form>

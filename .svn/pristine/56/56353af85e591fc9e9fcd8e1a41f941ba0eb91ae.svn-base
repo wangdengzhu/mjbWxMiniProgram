@@ -1,0 +1,219 @@
+const {
+  postCartList,
+  postCartListTrue,
+  updateCartAdd,
+  updateCartBatchbuy
+} = require('../apis/cart.js');
+const {
+  isArray
+} = require('./util.js');
+const app = getApp();
+/**
+ * 设置购物车缓存
+ *
+ * @param {object} data
+ * @param {array} data
+ */
+function setCartList(data) {
+  return new Promise((resolve,reject)=>{
+  let getToken = wx.getStorageSync('token');
+  let CartList = wx.getStorageSync('CartList');
+  let shopid = app.globalData.shopid;
+  let listData;
+  function addItem(data) {
+    let obj = {};
+    for (let i = 0; i < len; i++) {
+      obj[listData[i].skuid] = 1;
+    }
+    if (!obj[data.skuid]) {
+      listData.push(data)
+    }
+    for (let i = 0; i < len; i++) {
+      if (obj[data.skuid] && listData[i].skuid == data.skuid) {
+        listData[i].shopnum += data.shopnum
+      }
+    }
+  }
+
+  if (getToken) {
+    if (!isArray(data)) {
+      updateCartAdd(data).then(resolve,reject);
+      return;
+    } else {
+      updateCartBatchbuy(data).then(resolve, reject);
+      return;
+    }  
+  }
+
+  if (!CartList) {
+    CartList = {};
+  } else {
+    CartList = JSON.parse(CartList);
+  }
+  
+  if (!CartList[shopid]) {
+    CartList[shopid] = [];
+  }
+
+  listData = CartList[shopid];
+
+  let len = listData.length;
+
+  // 购物车超过99条;
+  if (len > 99) {
+    wx.showToast({
+      title: '购物车已满，请结算后再添加！',
+      icon: 'none',
+      duration: 2000
+    })
+    return;
+  }
+  
+  if (isArray(data)) {
+    for (let i = 0; i < data.length; i++) {
+      addItem(data[i]);
+    }
+  } else {
+    addItem(data);
+  }
+
+  wx.setStorageSync('CartList', JSON.stringify(CartList))
+  resolve();
+
+  });
+
+}
+
+/* function setCartList(data) {
+
+  let getToken = wx.getStorageSync('token');
+  let CartList = wx.getStorageSync('CartList');
+  let shopid = app.globalData.shopid;
+
+  if (getToken && !isArray(data)) {
+    updateCartAdd(data).then(function (res) {
+      //...
+    })
+    return
+  }
+
+  if (CartList) {
+    CartList = JSON.parse(CartList);
+    let listData = CartList[shopid];
+    // 如果该店铺没有购物车商品缓存
+    if (!listData) {
+      newStroageList(CartList, data, shopid);
+      return;
+    }
+
+    let len = listData.length;
+
+    if (isArray(data)) {
+      let obj = {};
+      for (let i = 0; i < len; i++) {
+        obj[listData[i].skuid] = 1;
+      }
+      for (let i = 0; i<data.length; i++) {
+        if (!obj[data[i].skuid]) {
+          listData.push(data[i])
+        }
+      }
+      for (let i = 0; i < len; i++) {
+        for (let j=0; j < data.length; j++) {
+          if (obj[data[i].skuid] && listData[i].skuid == data[j].skuid) {
+            listData[i].shopnum += data[j].shopnum
+          }
+        }
+      }
+    } else {
+      let obj = {};
+      for (let i = 0; i < len; i++) {
+        obj[listData[i].skuid] = 1;
+      }
+      if (!obj[data.skuid]) {
+        listData.push(data)
+      }
+      for (let i = 0; i < len; i++) {
+        if (obj[data.skuid] && listData[i].skuid == data.skuid) {
+          listData[i].shopnum += data.shopnum
+        }
+      }
+    }
+    CartList[shopid] = listData;
+    wx.setStorageSync('CartList', JSON.stringify(CartList))
+  } else {
+    newStroageList(CartList, data, shopid)
+  }
+
+  // 店铺关联购物车
+  function newStroageList(list, data, shopid) {
+    if (!list) {
+      list = {}
+    }
+    if (isArray(data)) {
+      list[shopid] = data;
+      wx.setStorageSync('CartList', JSON.stringify(list))
+    } else {
+      let arr = [];
+      arr.push(data)
+      list[shopid] = arr;
+      wx.setStorageSync('CartList', JSON.stringify(list))
+    }
+  }
+} */
+
+/**
+ * 获取购物车数量
+ */
+
+function getCartNum(cb) {
+  let getToken = wx.getStorageSync('token');
+  let CartList = wx.getStorageSync('CartList');
+  let shopid = app.globalData.shopid;
+  let allNum = 0;
+
+  if (!CartList) {
+    cb && cb(allNum)
+    return;
+  }
+
+  CartList = JSON.parse(CartList);
+  let listData = CartList[shopid];
+
+  if (!listData) {
+    listData = [];
+  }
+
+  if (getToken) {
+    postCartList(listData).then(function (res) {
+      if (!res.list || res.list.length == 0) {
+        cb && cb(allNum);
+        return;
+      }
+      cb && cb(res.list.length)
+    }).catch(function (err) {
+      cb && cb(allNum)
+    })
+  } else {
+    cb && cb(listData.length)
+  }
+}
+
+/**
+ * 获取购物车已选择列表
+ */
+
+function getCartList(cb) {
+  postCartListTrue().then(function (res) {
+    cb && cb(res)
+  }).catch(function (err) {
+    console.log(err)
+  })
+}
+
+
+module.exports = {
+  setCartList,
+  getCartList,
+  getCartNum
+}

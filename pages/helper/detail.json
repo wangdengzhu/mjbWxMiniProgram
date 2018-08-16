@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "问题请情",
+  "enablePullDownRefresh": false,
+  "usingComponents": {
+  },
+  "disableScroll": false,
+  "onReachBottomDistance": 50,
+  "backgroundTextStyle": "dark"
+}

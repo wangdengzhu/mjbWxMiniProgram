@@ -1,0 +1,8 @@
+{
+  "navigationBarTitleText": "我的订单",
+  "usingComponents": {
+    "confirmOrder": "/components/confirmOrder/confirmOrder",
+    "emtpy": "/components/empty/emptyGood"
+  },
+  "navigationBarBackgroundColor": "#fff"
+}

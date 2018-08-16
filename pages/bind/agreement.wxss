@@ -1,0 +1,52 @@
+/* pages/bind/agreement.wxss */
+.agreement-wrapper{
+		position: absolute;
+		left: 0;
+		top: 0;
+		right: 0;
+		bottom: 0;
+
+		padding: 20rpx;
+
+		font-size: 14px;
+		line-height: 1.8;
+		
+		overflow-x: hidden;
+		overflow-y: auto;
+		-webkit-overflow-scrolling: touch;
+		background-color: #fff;
+	}
+	.tit{
+		text-align: center;
+		margin-bottom: 20rpx
+	}
+  .title {
+    font-size: 1.5em;
+  }
+	.title,.sub-title{
+		font-weight: bold;
+		color:#333;
+	}
+	.sub-title{
+		margin-top: 24px;
+		margin-bottom: 6px;
+	}
+	view{
+		color:#666;
+		margin: .5em 0;
+	}
+	view.para{
+		text-indent: 2em;
+	}
+	view.third-tit,view.sub-tit{
+		color:#333;
+		font-weight: bold;
+	}
+	strong{
+		font-weight: bold;
+		color:#333;
+	}
+	.red{
+		color:#f00;
+		font-weight: bold;
+	}

@@ -1,0 +1,29 @@
+<!--pages/aftersale/express/express.wxml-->
+<view class="line"></view>
+<view class="wrap" wx:if="{{dataIsLoaded}}">
+  <view class="page">
+    <view class="express-state">
+      <view class="icon"></view>
+      <view class="state-wrap">
+        <view class="state">{{expressState[expressDetail.state]}}</view>
+        <view class="info">{{expressDetail.expressname || '快递单号'}}：{{expressno}}</view>
+        <view class="info">联系电话：{{expressDetail.servicetel || '暂无联系方式'}}</view>
+      </view>
+    </view>
+    <view class="express-detail">
+      <view class="no-express" wx:if="{{noExpressInfo}}">
+        <view class="icon"></view>
+        <text>暂无物流信息</text>
+      </view>
+      <view class="list">
+        <view wx:for="{{expressDetail.expressdata}}" wx:key="{{index}}" class="item {{(expressDetail.state == 3 && index == 0) ? 'finish' : ''}}">
+          <view class="icon"></view>
+          <view class="txt-wrap">
+            <view class="txt">{{item.context}}</view>
+            <view class="time">{{item.time}}</view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,93 @@
+// pages/logistics/logistics.js
+const { getExpressList, getDetails } = require('../../apis/logistics.js');
+const wxAPI = require('../../utils/wx-api.js');
+
+const app = getApp();
+app.Page({
+  /**
+   * 页面的初始数据
+   */
+  data: {
+    logisticsList: [],
+    expressList: [],
+    activeIndex: 0,
+    isShow: false
+  },
+
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  onLoad: function (options) {
+    let expressList = this.data.expressList;
+    if (Object.keys(options).length != 0) {
+      let orderNo = options.orderNo;
+      getDetails({ orderNo: orderNo }).then(list => {
+        if (list.expressnoitems.length <= 0) {
+          this.setData({ isShow: false });
+        } else {
+          expressList = list.expressnoitems;
+          getExpressList({ shipmentId: expressList[0].shipmentid, expressNo: expressList[0].expressno }).then(list => {
+            this.setData({ logisticsList: list, expressList: expressList, isShow: true });
+          })
+        }
+      })
+    }
+  },
+  onChange(e) {
+    let index = e.target.dataset.index, shipmentId = e.target.dataset.item.shipmentid, expressNo = e.target.dataset.item.expressno;
+    this.setData({ activeIndex: index, logisticsList: [] })
+    getExpressList({ shipmentId: shipmentId, expressNo: expressNo }).then(list => {
+      if (list != "") {
+        this.setData({ logisticsList: list });
+      }
+    })
+  },
+  /**
+   * 生命周期函数--监听页面初次渲染完成
+   */
+  onReady: function () {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow: function () {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面隐藏
+   */
+  onHide: function () {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面卸载
+   */
+  onUnload: function () {
+
+  },
+
+  /**
+   * 页面相关事件处理函数--监听用户下拉动作
+   */
+  onPullDownRefresh: function () {
+
+  },
+
+  /**
+   * 页面上拉触底事件的处理函数
+   */
+  onReachBottom: function () {
+
+  },
+
+  /**
+   * 用户点击右上角分享
+   */
+  onShareAppMessage: function () {
+
+  }
+})

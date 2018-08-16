@@ -1,0 +1,4 @@
+<!--components/bullet/bullet.wxml-->
+<view class="my-class bullet" animation="{{animationData}}">
+  <text>{{msglist[0]}}</text>
+</view>

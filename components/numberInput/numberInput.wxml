@@ -1,0 +1,11 @@
+<view class="number-input-wrap {{size}}">
+  <view class="number-input-minus{{disabledMinus?' disabled':''}}" catch:tap="onMinus">
+    <view class="minus-icon"></view>
+  </view>
+  <view class="number-input">
+    <input maxlength="3" value="{{value}}" bindconfirm="onConfirm" bindblur="onBlur"  bindinput="onInput" type="number" />
+  </view>
+  <view class="number-input-add{{disabledAdd?' disabled':''}}" catch:tap="onAdd">
+    <view class="add-icon"></view>
+  </view>
+</view>

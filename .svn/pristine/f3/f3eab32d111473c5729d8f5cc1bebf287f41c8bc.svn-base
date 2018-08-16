@@ -1,0 +1,13 @@
+/* pages/brandSelection/brandSelection.wxss */
+
+.wrap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box; 
+}
+.loading-container {
+  padding-top: 20rpx;
+}

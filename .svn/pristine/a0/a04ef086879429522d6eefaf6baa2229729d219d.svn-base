@@ -1,0 +1,68 @@
+var toFix = function(val) {
+  if(val) {
+    return val.toFixed(2)
+  }else {
+    return '0.00'
+  }
+}
+
+var getGoodsQty = function(arr) {
+  var num = 0;
+  for(var i=0; i<arr.length; i++) {
+    num += arr[i].qty
+  }
+  return num;
+}
+
+function fixZero(param) {
+  return param < 10 ? '0' + param : param;
+}
+var formatTime = function(seconds) {
+  var min = Math.floor(seconds / 60);
+  var sec = Math.floor(seconds % 60);
+  return fixZero(min) + ':' + fixZero(sec)
+}
+// 去掉时间毫秒
+var clearTime = function(timeStr) {
+  if(timeStr) {
+    var str = timeStr.slice(0, 19);
+    return str;
+  }
+}
+
+//计算当前秒数是 XX天XX小时XX分
+var secFormat = function(sec) {
+  if (sec <= 0) {
+    return '';
+  }
+  var prefix = '还剩 ',
+    timeStr = '',
+    suffix = ' 自动关闭',
+    hourHasSec = 60 * 60,
+    dayHasSec = hourHasSec * 24,
+    day = Math.floor(sec / dayHasSec),
+    hour = Math.floor((sec - day * dayHasSec) / hourHasSec),
+    minute = Math.floor((sec - day * dayHasSec - hour * hourHasSec) / 60),
+    second = sec % 60;
+  if (day === 0 && hour === 0) {  //当 天位 和 时位 都为0 时，显示 XX分XX秒
+    timeStr = fixZero(minute) + '分' + fixZero(second) + '秒';
+  } else {
+    timeStr = fixZero(day) + '天' + fixZero(hour) + '小时' + fixZero(minute) + '分';
+  }
+  return prefix + timeStr + suffix;
+}
+
+//获取已选规格
+var getCheckedSpec=function(skuid,list)
+{
+
+}
+
+module.exports = {
+  toFix: toFix,
+  getGoodsQty: getGoodsQty,
+  formatTime: formatTime,
+  clearTime: clearTime,
+  getCheckedSpec: getCheckedSpec,
+  secFormat: secFormat
+};

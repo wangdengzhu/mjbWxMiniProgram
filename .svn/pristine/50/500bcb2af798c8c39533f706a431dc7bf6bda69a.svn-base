@@ -1,0 +1,38 @@
+<view class="container" wx:if="{{isShow==1}}">
+  <view class="head head-gray">
+    <view class="label">问题：</view>
+        <view class="title">{{defailtInfo.qa_title_name}}</view>
+  </view>
+    <view class="head">
+    <view class="label">回答:</view>
+  </view>
+  <view class="content">
+    <rich-text nodes="{{content}}"></rich-text>
+  </view>
+  <view class="helper-line"></view>
+  <view class="feedback">
+  <view class="title">—— 以上方案对您是否有用 ——</view>
+  <view class="feedback-reust" wx:if="{{defailtInfo.useful_flag!=0}}">
+  <view>感谢您的反馈～</view>
+  </view>
+  <view class="buttons" wx:else>
+    <view class="btn" data-value="1" bind:tap="onFeedback"><view class="helper-icon icon-yes"></view><view>有用</view></view>
+    <view class="btn" data-value="2" bind:tap="onFeedback"><view class="helper-icon icon-no"></view><view>无用</view></view>
+  </view>
+  </view>
+    <view class="head head-gray">
+    <view class="label">还有其它问题？</view>
+  </view>
+   <view class="group-list"  >
+   <view class="item"  bind:tap="onNav" wx:for="{{defailtInfo.other_problemlist}}" data-name="{{item.qa_detail_name}}" data-cateid="{{item.qa_sort_id}}" wx:key="{{item.qa_detail_id}}" data-id="{{item.qa_detail_id}}">
+   <view>{{item.qa_detail_name}}</view>
+   <view class="arrow-r"></view>
+   </view>
+  </view>
+    <view class="concat">
+     <view bind:tap="onOpenConcat">
+       <view class="helper-icon icon-concat"></view> <view >400-400-400</view>
+     </view>
+  </view>
+</view>
+

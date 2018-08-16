@@ -1,0 +1,36 @@
+/* components/searchInput/searchInput.wxss */
+
+.search-input {
+  display: flex;
+  background-color: #f0f0f0;
+  border-radius: 10rpx;
+  margin: 0 auto;
+   box-sizing: border-box;
+   height: 60rpx;
+   align-items: center;
+  padding:0 20rpx;
+}
+
+.search-icon {
+  background-image:url(https://devskin.manjd.net/miniprogram/images/search-icon.png);
+  background-repeat: no-repeat;
+  background-size:contain;
+  width: 26rpx;
+  height: 24rpx;
+
+}
+
+.input-wrapper {
+  flex-grow: 1;
+  margin-left: 20rpx;
+}
+.place-text{
+  color: #999999;
+    font-size: 28rpx;
+}
+.input {
+  color: #999999;
+  font-size: 28rpx;
+   height: 40rpx; 
+   line-height: 1.2; 
+}

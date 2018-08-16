@@ -1,0 +1,12 @@
+<!--pages/goodsTop/goodsTop.wxml-->
+<view class="swiper-wrap" wx:if="{{banner.length > 0}}">
+  <swiper indicator-dots="{{banner.length == 1 ? false : true}}" autoplay="true" circular="true" indicator-color="#cccccc" indicator-active-color="#ff681d">
+    <navigator wx:for="{{banner}}" wx:key="{{item.bannerid}}" hover-class="none" url="/pages/goods/goodsDetail/goodsDetail?spuid={{item.url}}">
+      <swiper-item>
+        <image src="{{item.content}}" mode="widthFix" class="slide-image" />
+      </swiper-item>
+    </navigator>
+  </swiper>
+</view>
+<goodlist goodsArr="{{goodsTop}}" wx:if="{{pageIsLoaded}}"></goodlist>
+<view class="no-more" wx:if="{{isLoading}}">没有更多啦~</view>

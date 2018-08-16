@@ -1,0 +1,5 @@
+
+page{
+  background:rgba(245,245,245,1);
+  padding-bottom: 60rpx;
+}

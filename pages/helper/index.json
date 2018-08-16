@@ -1,0 +1,10 @@
+{
+  "navigationBarTitleText": "帮助中心",
+  "enablePullDownRefresh": false,
+  "usingComponents": {
+        "empty-goods": "/components/empty/emptyGood"
+  },
+  "disableScroll": false,
+  "onReachBottomDistance": 50,
+  "backgroundTextStyle": "dark"
+}

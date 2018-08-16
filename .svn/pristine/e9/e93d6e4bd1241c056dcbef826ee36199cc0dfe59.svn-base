@@ -1,0 +1,27 @@
+<!--components/evaluateList/evaluateGoods.wxml-->
+<block wx:for="{{evaluateGoods}}" wx:key="item.spuid">
+  <view class="goodslist-item" data-spuid="{{item.spuid}}" bindtap='toDetail'>
+    <view class="goodslist-pic">
+      <image src="{{item.goodslistpicurl}}" mode="aspectFill"></image>
+    </view>
+    <view class="goodslist-info">
+      <view class="gl-top">
+        <view class="gl-name-wrap">
+          <text>{{item.title}}</text>
+        </view>
+        <view class="gl-format">
+          <text>{{item.spec}}</text>
+        </view>
+      </view>
+      <view class="gl-bot">
+        <view>
+          <text class="gl-price">￥{{item.salesprice}}</text>
+          <text class="gl-num">x{{item.qty}}</text>
+        </view>
+        <view class="gl-eval" wx:if="{{isShow}}">
+          <button data-info="{{item}}" catchtap='onNowEval'>立即评价</button>
+        </view>
+      </view>
+    </view>
+  </view>
+</block>

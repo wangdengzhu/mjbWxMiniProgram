@@ -1,0 +1,11 @@
+<view class="helper-wrap">
+  <view class="group-list"  wx:if="{{isShow==1}}">
+   <view class="item"  bind:tap="onNav" wx:for="{{list}}" data-name="{{item.qa_detail_name}}" data-cateid="{{item.qa_sort_id}}" wx:key="{{item.qa_detail_id}}" data-id="{{item.qa_detail_id}}">
+   <view>{{item.qa_detail_name}}</view>
+   <view class="arrow-r"></view>
+   </view>
+  </view>
+    <empty-goods wx:if="{{isShow==2}}" text="抱歉，暂无数据"></empty-goods>
+</view>
+
+

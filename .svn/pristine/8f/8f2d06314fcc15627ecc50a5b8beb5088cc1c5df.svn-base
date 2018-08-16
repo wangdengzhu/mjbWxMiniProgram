@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "物流详情",
+  "usingComponents": {
+    "empty-good": "/components/empty/emptyGood"
+  },
+  "navigationBarBackgroundColor": "#fff"
+}

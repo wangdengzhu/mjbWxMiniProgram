@@ -1,0 +1,11 @@
+{
+  "navigationBarTitleText": "意见反馈",
+  "enablePullDownRefresh": false,
+  "usingComponents": {
+    "downlist": "/components/downlist/downlist",
+    "upload-image": "/components/upload/uploadImage"
+  },
+  "disableScroll": false,
+  "onReachBottomDistance": 50,
+  "backgroundTextStyle": "dark"
+}

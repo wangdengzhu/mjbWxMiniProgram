@@ -1,0 +1,86 @@
+page{
+  padding-bottom: 235rpx;
+}
+.feedback-form{
+    font-size: 30rpx;
+  color: #333333;
+}
+.feedback-form .form-item{
+    padding: 21rpx 32rpx; 
+}
+
+.opinion{
+  height: 237rpx;
+  color: #333333;
+  font-size: 28rpx;
+}
+
+.placeholder-text{
+  color: #CCCCCC;
+  z-index: 1;
+}
+.input-number{
+  display: flex;
+  justify-content: flex-end;
+  color: #CCCCCC;
+  font-size: 26rpx;
+}
+
+
+.input-number{
+  display: flex;
+  justify-content: flex-end;
+  color: #CCCCCC;
+  font-size: 26rpx;
+}
+.upload{}
+.upload-picture-wrap{
+    border:1rpx solid rgba(204,204,204,1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.upload-picture-wrap>view{
+  text-align: center;
+}
+.upload-picture-wrap .upload-picture-img{
+    width:64rpx;
+   height:60rpx;
+  background-image: url(https://devskin.manjd.net/miniprogram/images/camera.png);
+   background-repeat: no-repeat;
+   background-size:contain; 
+    margin: 0 auto;
+}
+.upload-picture-wrap .upload-picture-text{
+  color: #999999;
+  font-size: 24rpx;
+  margin-top: 16rpx;
+}
+.picture-wrap{
+  position: relative;
+}
+.picture-wrap image{
+  width:212rpx;
+  height:212rpx;
+}
+.picture-remove{
+     width:32rpx;
+   height:32rpx;
+  background-image: url(https://devskin.manjd.net/miniprogram/images/remove.png);
+   background-repeat: no-repeat;
+   background-size:contain; 
+   position: absolute;
+   right: -17rpx;
+   top:-17rpx;
+}
+
+ .picture-item{
+  float: left;
+    width:212rpx;
+  height:212rpx;
+  margin-right: 25rpx;
+    margin-bottom: 40rpx;
+}
+.picture-item:nth-child(3n){
+    margin-right:0;
+} 

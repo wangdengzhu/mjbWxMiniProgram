@@ -1,0 +1,95 @@
+/**
+ *反馈意见
+ @dev fanyl
+*/
+let app=getApp();
+app.Page({
+
+  /**
+   * 页面的初始数据
+   */
+  data: {
+    visible:false,
+    pictures:[{
+      src:'https://checkimg.manjd.net/sku/desc/200-200/20171127113554873.jpg'
+    }, {
+      src: 'https://checkimg.manjd.net/sku/desc/200-200/20171127113554873.jpg'
+      }, {
+        src: 'https://checkimg.manjd.net/sku/desc/200-200/20171127113554873.jpg'
+    }, {
+      src: 'https://checkimg.manjd.net/sku/desc/200-200/20171127113554873.jpg'
+      }, {
+        src: 'https://checkimg.manjd.net/sku/desc/200-200/20171127113554873.jpg'
+    }, {
+      src: 'https://checkimg.manjd.net/sku/desc/200-200/20171127113554873.jpg'
+      }, {
+        src: 'https://checkimg.manjd.net/sku/desc/200-200/20171127113554873.jpg'
+    }, {
+      src: 'https://checkimg.manjd.net/sku/desc/200-200/20171127113554873.jpg'
+    }],
+    feedbackList:[{
+      value:'1',
+      label:'问题列表中'
+    }],
+    inputNumber:0
+  },
+
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  onLoad: function (options) {
+      wx.hideLoading();
+  },
+
+  /**
+   * 生命周期函数--监听页面初次渲染完成
+   */
+  onReady: function () {
+  
+  },
+
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow: function () {
+  
+  },
+  onSubmit()
+ {
+
+ },
+  onInput: app.mjd.debounce(function(e){
+    this.setData({
+      inputNumber:e.detail.value.length
+    })
+  },500),
+  onVisible(e){
+    this.setData({
+      visible: e.detail.visible
+    })
+  },
+  ontransitionend()
+ {
+    let showFeedbackType = this.data.showFeedbackType;
+    if (!showFeedbackType){
+      this.setData({
+        showFeedbackType2:' dropdown-out'
+      })
+    }
+},
+ onSelectFeedbackType(e){
+  
+   let showFeedbackType = !this.data.showFeedbackType, showFeedbackType2 = this.data.showFeedbackType2;
+    this.setData({
+      showFeedbackType: showFeedbackType,
+      showFeedbackType2: ' dropdown-in'
+    })
+    if (showFeedbackType){
+      setTimeout(()=>{
+        this.setData({
+          showFeedbackType2: ''
+        });
+      },17)
+    }
+ }
+})
